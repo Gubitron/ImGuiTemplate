@@ -6,7 +6,7 @@ using Veldrid.Sdl2;
 using System.Runtime.InteropServices;
 using ImGuiNET;
 
-namespace ImGuiTesting
+namespace ImGuiTemplate.UiBackend
 {
     /// <summary>
     /// A modified version of Veldrid.ImGui's ImGuiRenderer.
@@ -28,8 +28,8 @@ namespace ImGuiTesting
         private ResourceLayout _layout;
         private ResourceLayout _textureLayout;
         private Pipeline _pipeline;
-        private Veldrid.ResourceSet _mainResourceSet;
-        private Veldrid.ResourceSet _fontTextureResourceSet;
+        private ResourceSet _mainResourceSet;
+        private ResourceSet _fontTextureResourceSet;
 
         private IntPtr _fontAtlasID = (IntPtr)1;
         private bool _controlDown;
@@ -81,14 +81,14 @@ namespace ImGuiTesting
             io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset
                 | ImGuiBackendFlags.HasMouseCursors;
 
-            io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard 
+            io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard
                 | ImGuiConfigFlags.DockingEnable
                 | ImGuiConfigFlags.ViewportsEnable;
 
             io.Fonts.Flags |= ImFontAtlasFlags.NoBakedLines;
 
             io.ConfigWindowsResizeFromEdges = true;
-            
+
 
             ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
             ImGuiViewportPtr mainViewport = platformIO.Viewports[0];
@@ -308,7 +308,7 @@ namespace ImGuiTesting
         {
             if (!_setsByView.TryGetValue(textureView, out ResourceSetInfo rsi))
             {
-                Veldrid.ResourceSet resourceSet = factory.CreateResourceSet(new ResourceSetDescription(_textureLayout, textureView));
+                ResourceSet resourceSet = factory.CreateResourceSet(new ResourceSetDescription(_textureLayout, textureView));
                 rsi = new ResourceSetInfo(GetNextImGuiBindingID(), resourceSet);
 
                 _setsByView.Add(textureView, rsi);
@@ -344,7 +344,7 @@ namespace ImGuiTesting
         /// <summary>
         /// Retrieves the shader texture binding for the given helper handle.
         /// </summary>
-        public Veldrid.ResourceSet GetImageResourceSet(IntPtr imGuiBinding)
+        public ResourceSet GetImageResourceSet(IntPtr imGuiBinding)
         {
             if (!_viewsById.TryGetValue(imGuiBinding, out ResourceSetInfo tvi))
             {
@@ -426,7 +426,7 @@ namespace ImGuiTesting
                 (uint)height,
                 1,
                 1,
-                Veldrid.PixelFormat.R8_G8_B8_A8_UNorm,
+                PixelFormat.R8_G8_B8_A8_UNorm,
                 TextureUsage.Sampled));
             _fontTexture.Name = "ImGui.NET Font Texture";
             gd.UpdateTexture(
@@ -504,10 +504,6 @@ namespace ImGuiTesting
 
             _frameBegun = true;
             ImGui.NewFrame();
-
-            ImGui.Text($"Main viewport Position: {ImGui.GetPlatformIO().Viewports[0].Pos}");
-            ImGui.Text($"Main viewport Size: {ImGui.GetPlatformIO().Viewports[0].Size}");
-            ImGui.Text($"MoouseHoveredViewport: {ImGui.GetIO().MouseHoveredViewport}");
         }
 
         private unsafe void UpdateMonitors()
@@ -686,7 +682,7 @@ namespace ImGuiTesting
             for (int i = 1; i < viewports.Size; i++)
             {
                 ImGuiViewportPtr v = viewports[i];
-                VeldridImGuiWindow window = ((VeldridImGuiWindow)GCHandle.FromIntPtr(v.PlatformUserData).Target);
+                VeldridImGuiWindow window = (VeldridImGuiWindow)GCHandle.FromIntPtr(v.PlatformUserData).Target;
                 window.Update();
             }
         }
@@ -823,9 +819,9 @@ namespace ImGuiTesting
         private struct ResourceSetInfo
         {
             public readonly IntPtr ImGuiBinding;
-            public readonly Veldrid.ResourceSet ResourceSet;
+            public readonly ResourceSet ResourceSet;
 
-            public ResourceSetInfo(IntPtr imGuiBinding, Veldrid.ResourceSet resourceSet)
+            public ResourceSetInfo(IntPtr imGuiBinding, ResourceSet resourceSet)
             {
                 ImGuiBinding = imGuiBinding;
                 ResourceSet = resourceSet;

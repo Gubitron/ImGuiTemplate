@@ -6,6 +6,8 @@ using Veldrid.StartupUtilities;
 using ImGuiNET;
 
 using static ImGuiNET.ImGuiNative;
+using ImGuiTemplate.UiBackend;
+using ImGuiTemplate.UI;
 
 namespace ImGuiTesting;
 
@@ -24,24 +26,40 @@ internal static class Program
     private static int _counter = 0;
     private static int _dragInt = 0;
 
+    private const uint _backgroundColor = 0xa4ff39ed; // light purple
+    private const uint _titleColor = 0x6e0ba7ed; // darker purple
+    private const uint _textColor = 0x00000000; // black
+
     [STAThread]
     static async Task Main()
     {
-        var window = new ImGuiWindow("Test Window");
+        var window = new App("Test Window");
         var result = await window.SetWindowFunction(myGui).ConfigureAwait(false);
     }
 
     public static void myGui()
     {
-        MainMenuBar();
-        AlgorithmWindow();
-        InfoWindow();
-        ImGui.ShowDemoWindow();
+        UI.Run();
+
+        //ImGui.PushStyleColor(ImGuiCol.DockingEmptyBg, _backgroundColor);
+        ////ImGui.PushStyleColor(ImGuiCol.TitleBg, _titleColor);
+        ////ImGui.PushStyleColor(ImGuiCol.MenuBarBg, _titleColor);
+        ////ImGui.PushStyleColor(ImGuiCol.Text, _textColor);
+
+        //ImGui.DockSpaceOverViewport(ImGui.GetMainViewport());
+
+        //MainMenuBar();
+        //AlgorithmWindow();
+        //InfoWindow();
+        ////ImGui.ShowDemoWindow();
+
+        //ImGui.PopStyleColor(1);
     }
 
     private static void AlgorithmWindow()
     {
         ImGui.Begin("Algorithm");
+        ImGui.GetWindowDockID();
         if (ImGui.TreeNode("Node1"))
         {
             ImGui.TreeNode("Child1");
@@ -56,7 +74,6 @@ internal static class Program
     private static void InfoWindow()
     {
         ImGui.Begin("Info");
-        ImGui.SetWindowSize(new Vector2(200, 75));
         float framerate = ImGui.GetIO().Framerate;
         ImGui.Text($"Frame time: {1000.0f / framerate:0.##} ms");
         ImGui.Text($"FPS: {framerate:0.#} FPS");
@@ -82,6 +99,9 @@ internal static class Program
         {
             if (ImGui.MenuItem("Options"))
             {
+                ImGui.Begin("Options");
+                ImGui.LabelText("Setting1", "Helps set setting 1.");
+                ImGui.End();
             }
             ImGui.EndMenu();
         }

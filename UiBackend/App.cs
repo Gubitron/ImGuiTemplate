@@ -5,9 +5,9 @@ using Veldrid;
 using Veldrid.Sdl2;
 using System.Numerics;
 
-namespace ImGuiTesting;
+namespace ImGuiTemplate.UiBackend;
 
-public class ImGuiWindow
+public class App
 {
     private static Sdl2Window _window;
     private static GraphicsDevice _graphicsDevice;
@@ -16,10 +16,10 @@ public class ImGuiWindow
 
     private static Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
 
-    public ImGuiWindow(string windowName)
+    public App(string windowName)
     {
         VeldridStartup.CreateWindowAndGraphicsDevice(
-            new WindowCreateInfo(50, 50, 1640, 720, WindowState.Normal, windowName),
+            new WindowCreateInfo(50, 50, 1920, 1080, WindowState.Normal, windowName),
             new GraphicsDeviceOptions(true, null, true, ResourceBindingModel.Improved, true, true),
             out _window,
             out _graphicsDevice);

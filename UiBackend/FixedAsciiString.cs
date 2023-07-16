@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ImGuiTesting
+namespace ImGuiTemplate.UiBackend
 {
     public class FixedAsciiString : IDisposable
     {
