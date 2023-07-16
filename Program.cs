@@ -7,7 +7,7 @@ using ImGuiNET;
 
 using static ImGuiNET.ImGuiNative;
 using ImGuiTemplate.UiBackend;
-using ImGuiTemplate.UI;
+using ImGuiTemplate.UI.Views;
 
 namespace ImGuiTesting;
 

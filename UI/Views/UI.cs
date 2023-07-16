@@ -1,9 +1,8 @@
 ﻿using ImGuiNET;
-using ImGuiTemplate.UI.Views;
 
-namespace ImGuiTemplate.UI;
+namespace ImGuiTemplate.UI.Views;
 
-public static class UI
+public static partial class UI
 {
     public static void Run()
     {
@@ -15,9 +14,12 @@ public static class UI
     public static void MainMenu()
     {
         ImGui.BeginMainMenuBar();
-
-        MainMenuView.FileMenu();
-        MainMenuView.EditMenu();
+        
+        FileMenu();
+        EditMenu();
+        ViewMenu();
+        ToolsMenu();
+        HelpMenu();
 
         ImGui.EndMainMenuBar();
     }
