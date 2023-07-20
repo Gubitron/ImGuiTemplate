@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	<UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="UiBackend\Shaders\GLSL\imgui-frag.glsl" />
+    <None Remove="UiBackend\Shaders\GLSL\imgui-vertex.glsl" />
+    <None Remove="UiBackend\Shaders\HLSL\imgui-frag.hlsl.bytes" />
+    <None Remove="UiBackend\Shaders\HLSL\imgui-vertex.hlsl.bytes" />
+    <None Remove="UiBackend\Shaders\Metal\imgui-frag.metallib" />
+    <None Remove="UiBackend\Shaders\Metal\imgui-vertex.metallib" />
+    <None Remove="UiBackend\Shaders\SPIR-V\imgui-frag.spv" />
+    <None Remove="UiBackend\Shaders\SPIR-V\imgui-vertex.spv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="UiBackend\Shaders\GLSL\imgui-frag.glsl">
+      <LogicalName>imgui-frag.glsl</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\GLSL\imgui-vertex.glsl">
+      <LogicalName>imgui-vertex.glsl</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\HLSL\imgui-frag.hlsl.bytes">
+      <LogicalName>imgui-frag.hlsl.bytes</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\HLSL\imgui-vertex.hlsl.bytes">
+      <LogicalName>imgui-vertex.hlsl.bytes</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\Metal\imgui-frag.metallib">
+      <LogicalName>imgui-frag.metallib</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\Metal\imgui-vertex.metallib">
+      <LogicalName>imgui-vertex.metallib</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\SPIR-V\imgui-frag.spv">
+      <LogicalName>imgui-frag.spv</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UiBackend\Shaders\SPIR-V\imgui-vertex.spv">
+      <LogicalName>imgui-vertex.spv</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VisionHelper.Infrastructure\VisionHelper.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImGui.NET" Version="1.89.7.1" />
+    <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.SDL2" Version="4.9.0" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.9.0" />
+  </ItemGroup>
+
+</Project>

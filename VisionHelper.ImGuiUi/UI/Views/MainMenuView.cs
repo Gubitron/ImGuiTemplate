@@ -1,21 +1,19 @@
-﻿using ImGuiNET;
+﻿namespace VisionHelper.ImGuiUi.UI.Views;
 
-namespace ImGuiTemplate.UI.Views;
-
-public static partial class UI
+public partial class UserInterface
 {
-    private static void FileMenu()
+    private async void FileMenu()
     {
         if (ImGui.BeginMenu("File"))
         {
             if (ImGui.MenuItem("New File"))
             {
-                
+
             }
 
             if (ImGui.MenuItem("Open File"))
             {
-
+                var selection = SystemDialogs.OpenFileDialog();
             }
 
             if (ImGui.MenuItem("Close File"))
@@ -63,7 +61,7 @@ public static partial class UI
         }
     }
 
-    public static void EditMenu()
+    public void EditMenu()
     {
         if (ImGui.BeginMenu("Edit"))
         {
@@ -110,7 +108,7 @@ public static partial class UI
         }
     }
 
-    public static void ViewMenu()
+    public void ViewMenu()
     {
         if (ImGui.BeginMenu("View"))
         {
@@ -160,7 +158,7 @@ public static partial class UI
         }
     }
 
-    public static void ToolsMenu()
+    public void ToolsMenu()
     {
         if (ImGui.BeginMenu("Tools"))
         {
@@ -183,14 +181,14 @@ public static partial class UI
 
             if (ImGui.MenuItem("Options"))
             {
-                OptionsWindow();
+                showOptionsPopup = true;
             }
 
             ImGui.EndMenu();
         }
     }
 
-    public static void HelpMenu()
+    public void HelpMenu()
     {
         if (ImGui.BeginMenu("Help"))
         {

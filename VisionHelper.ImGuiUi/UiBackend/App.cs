@@ -1,22 +1,38 @@
-﻿using ImGuiNET;
-using System.Diagnostics;
-using Veldrid.StartupUtilities;
-using Veldrid;
-using Veldrid.Sdl2;
-using System.Numerics;
-
-namespace ImGuiTemplate.UiBackend;
+﻿namespace VisionHelper.ImGuiUi.UiBackend;
 
 public class App
 {
-    private static Sdl2Window _window;
-    private static GraphicsDevice _graphicsDevice;
-    private static CommandList _commandList;
-    private static ImGuiController _controller;
+    private UserInterface _userInterface;
+    private Sdl2Window _window;
+    private GraphicsDevice _graphicsDevice;
+    private CommandList _commandList;
+    private ImGuiController _controller;
 
-    private static Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
+    //private const uint _backgroundColor = 0xa4ff39ed; // light purple
+    //private const uint _titleColor = 0x6e0ba7ed; // darker purple
+    //private const uint _textColor = 0x00000000; // black
 
-    public App(string windowName)
+    private Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
+
+    public App(string windowName, UserInterface userInterface)
+    {
+        _userInterface = userInterface;
+
+        SetupWindow(windowName);
+
+        _commandList = _graphicsDevice.ResourceFactory.CreateCommandList();
+
+        _controller = new ImGuiController(
+            _graphicsDevice, 
+            _graphicsDevice.MainSwapchain.Framebuffer.OutputDescription, 
+            _window, 
+            _window.Width, 
+            _window.Height);
+
+        var stopwatch = Stopwatch.StartNew();
+    }
+
+    private void SetupWindow(string windowName)
     {
         VeldridStartup.CreateWindowAndGraphicsDevice(
             new WindowCreateInfo(50, 50, 1920, 1080, WindowState.Normal, windowName),
@@ -27,13 +43,8 @@ public class App
         _window.Resized += () =>
         {
             _graphicsDevice.MainSwapchain.Resize((uint)_window.Width, (uint)_window.Height);
-            _controller.WindowResized(_window.Width, _window.Height);
+            _controller?.WindowResized(_window.Width, _window.Height);
         };
-
-        _commandList = _graphicsDevice.ResourceFactory.CreateCommandList();
-        _controller = new ImGuiController(_graphicsDevice, _graphicsDevice.MainSwapchain.Framebuffer.OutputDescription, _window, _window.Width, _window.Height);
-
-        var stopwatch = Stopwatch.StartNew();
     }
 
     public async Task<bool> SetWindowFunction(Action action)
