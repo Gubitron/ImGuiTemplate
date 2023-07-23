@@ -6,14 +6,14 @@ public partial class UserInterface
     {
         if (ImGui.BeginMenu("File"))
         {
-            if (ImGui.MenuItem("New File"))
+            if (ImGui.MenuItem("New File", "CTRL+N"))
             {
 
             }
 
-            if (ImGui.MenuItem("Open File"))
+            if (ImGui.MenuItem("Open File", "CTRL+O"))
             {
-                var selection = SystemDialogs.OpenFileDialog();
+                var selection = SystemDialogs.OpenFileDialog("Open algorithm file");
             }
 
             if (ImGui.MenuItem("Close File"))
@@ -28,12 +28,12 @@ public partial class UserInterface
 
             ImGui.Separator();
 
-            if (ImGui.MenuItem("Save File"))
+            if (ImGui.MenuItem("Save File", "CTRL+S"))
             {
 
             }
 
-            if (ImGui.MenuItem("Save File As..."))
+            if (ImGui.MenuItem("Save File As...", "CTRL+SHIFT+S"))
             {
 
             }
